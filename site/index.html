@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Video Chat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" href="/css/bootstrap-responsive.min.css" rel="stylesheet"></link>
+    <link type="text/css" href="/css/style.css" rel="stylesheet"></link>
+  </head>
+  <body>
+    <div class="container-fluid" id="page">
+      <div class="row-fluid">
+        <div class="span12">
+            <div id="selectedVideo">
+
+            </div>
+        </div>
+      </div>
+      <div class="row-fluid">
+        <div class="span12">
+            <div id="videos">
+                <video id="you" class="thumbnail" autoplay controls></video>
+            </div>
+        </div>
+      </div>
+    </div>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/webrtc.io.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/script.js"></script>
+    <script type="text/javascript">
+      $(function(){
+        window.app.init();
+      })
+    </script>
+  </body>
+</html>
