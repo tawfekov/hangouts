@@ -1,26 +1,33 @@
 var app = {
     videos: [],
     PeerConnection: window.PeerConnection || window.webkitPeerConnection00 || window.webkitRTCPeerConnection || window.mozRTCPeerConnection || window.RTCPeerConnection,
+    selectedVideo:"#selectedVideo",
+    audio:true,
     createVideo: function (socketId) {
-        var Id      = "remote-"+socketId;
-        var element = '<video id="'+Id+'" autoplay controls src=""></video>';
+        var id      = "remote-"+socketId;
+        var element = '<video id="'+id+'" autoplay controls src=""></video>';
         $("#videos").append(element);
-        $("#"+Id).addClass("thumbnail");
-        app.videos.push(Id);
-        return Id;
+        $("#"+id).click(function(e){
+            app.selectVideo(e.target.id);
+        }).attr("alt",id);
+        app.videos.push(id);
+        return id;
     },
     removeVideo: function (socketId) {
         var video = $('#remote-' + socketId);
         if (video) {
             app.videos.splice(app.videos.indexOf(video), 1);
-            video.remove();
+            video.fadeOut("slow").remove();
+            /// try to remove the big video if its present .
+            $("video[alt=remote-"+socketId+"]").fadeOut("slow").remove();
         }else{
           console.log("socketId" + socketId + "not found in the dom , please refresh the page");
         }
     },
     selectVideo:function(socketId){
-        $("#selectedVideo video.big").remove();
-
+        var src = $("#"+socketId).attr("src");
+        $(selectedVideo).attr({"src":src,"alt":socketId}).fadeIn("slow");
+        $("#"+socketId).fadeOut("fast");
     },
     init: function () {
         if (PeerConnection) {
@@ -29,9 +36,10 @@ var app = {
                     "mandatory": {},
                     "optional": []
                 },
-                "audio": false
+                "audio": app.audio,
             }, function (stream) {
-                $('#you').attr("src" , URL.createObjectURL(stream));
+                $('#you').attr({"src":URL.createObjectURL(stream),"alt":stream});
+                //$('#you').play();
                 document.getElementById('you').play();
             });
         } else {
@@ -47,14 +55,15 @@ var app = {
         rtc.on('add remote stream', function (stream, socketId) {
             console.log("Adding Remote Stream:# "+ socketId);
             var video = app.createVideo(socketId);
-            $("#"+video).attr("class", "");
-            console.log(video);
+            $("#"+video).attr({"class":"","alt":socketId});
+            $("#log").append("<li>Adding Remote Stream:# "+ socketId + "</li>");
             rtc.attachStream(stream, video);
         });
         // leave event 
-        rtc.on('disconnect stream', function (data) {
-            console.log('remove ' + data);
-            app.removeVideo(data);
+        rtc.on('disconnect stream', function (socketId) {
+            console.log('remove ' + socketId);
+            $("#log").append("<li>Stream:# "+ socketId + " left the chat </li>");
+            app.removeVideo(socketId);
         });
     }
 }
