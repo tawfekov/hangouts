@@ -7,12 +7,11 @@ body{
 }
 video{
   position: relative;
-  float: left;
-  border-radius: 5px; 
-  padding:5px;
-  margin: 3px;
-  width: 300px;
-  height: 200px;
+  float: right;
+  padding-left:4px;
+  padding-right:4px;
+  width: 310px;
+  height: 250px;
 }
 video#selectedVideo{
   height: 100% !important;

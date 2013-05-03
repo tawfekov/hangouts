@@ -1,4 +1,4 @@
-      //CLIENT
+//CLIENT
 
 // Fallbacks for vendor-specific variables until the spec is finalized.
 

@@ -1,15 +1,23 @@
-var app = {
+window.app = {
     videos: [],
-    PeerConnection: window.PeerConnection || window.webkitPeerConnection00 || window.webkitRTCPeerConnection || window.mozRTCPeerConnection || window.RTCPeerConnection,
+    PeerConnection: window.PeerConnection 
+                 || window.webkitPeerConnection00 
+                 || window.webkitRTCPeerConnection 
+                 || window.mozRTCPeerConnection 
+                 || window.RTCPeerConnection,
+
     selectedVideo:"#selectedVideo",
-    audio:true,
+    audio:false,
+    onStage:"",
+    displayLog:false,
     createVideo: function (socketId) {
         var id      = "remote-"+socketId;
         var element = '<video id="'+id+'" autoplay controls src=""></video>';
         $("#videos").append(element);
+        // TODO : update to use jquery live 
         $("#"+id).click(function(e){
             app.selectVideo(e.target.id);
-        }).attr("alt",id);
+        });
         app.videos.push(id);
         return id;
     },
@@ -19,17 +27,25 @@ var app = {
             app.videos.splice(app.videos.indexOf(video), 1);
             video.fadeOut("slow").remove();
             /// try to remove the big video if its present .
-            $("video[alt=remote-"+socketId+"]").fadeOut("slow").remove();
+            ///$("video[alt=remote-"+socketId+"]").fadeOut("slow").remove();
         }else{
-          console.log("socketId" + socketId + "not found in the dom , please refresh the page");
+          app.logMessage("socketId" + socketId + "not found in the dom , please refresh the page");
         }
     },
     selectVideo:function(socketId){
-        var src = $("#"+socketId).attr("src");
-        $(selectedVideo).attr({"src":src,"alt":socketId}).fadeIn("slow");
-        $("#"+socketId).fadeOut("fast");
+        app.minimizeVideo(app.onStage);
+        app.maximizeVideo(socketId);
     },
-    init: function () {
+    maximizeVideo:function(socketId){
+        var src = $("#"+socketId).attr("src");
+        $("#"+socketId).fadeOut("fast");
+        $(selectedVideo).attr({"src":src}).fadeIn("slow");
+        app.onStage = socketId;
+    },
+    minimizeVideo:function(socketId){
+        $("#"+socketId).fadeIn("slow");
+    },
+    setupStream:function(target){
         if (PeerConnection) {
             rtc.createStream({
                 "video": {
@@ -38,33 +54,38 @@ var app = {
                 },
                 "audio": app.audio,
             }, function (stream) {
-                $('#you').attr({"src":URL.createObjectURL(stream),"alt":stream});
+                $('#'+target).attr({"src":URL.createObjectURL(stream),"alt":stream});
                 //$('#you').play();
-                document.getElementById('you').play();
+                document.getElementById(target).play();
             });
         } else {
-            alert('Your browser is not supported or you have to turn on flags. In chrome you go to chrome://flags and turn on Enable PeerConnection remember to restart chrome');
+            app.logMessage('Your browser is not supported or you have to turn on flags. In chrome you go to chrome://flags and turn on Enable PeerConnection remember to restart chrome');
         }
+    },
+    logMessage:function(message){
+        if(app.displayLog){
+            console.log(message);
+            $("#log").append("<li>" + message + "</li>");
+        }
+    },
+    init: function () {
+        app.setupStream("you");
         var rooms = [];
         var room = window.location.hash.slice(1);
         rooms.push(room);
         // connect to socketIO
         rtc.connect("ws:" + window.location.href.substring(window.location.protocol.length).split('#')[0], room);
-        console.log("created room with the name :" + room);
         // join event 
         rtc.on('add remote stream', function (stream, socketId) {
-            console.log("Adding Remote Stream:# "+ socketId);
+            app.logMessage("Adding Remote Stream:# "+ socketId);
             var video = app.createVideo(socketId);
             $("#"+video).attr({"class":"","alt":socketId});
-            $("#log").append("<li>Adding Remote Stream:# "+ socketId + "</li>");
             rtc.attachStream(stream, video);
         });
         // leave event 
         rtc.on('disconnect stream', function (socketId) {
-            console.log('remove ' + socketId);
-            $("#log").append("<li>Stream:# "+ socketId + " left the chat </li>");
+            app.logMessage("Stream:# "+ socketId + " left the chat !");
             app.removeVideo(socketId);
         });
     }
-}
-window.app = app ;
+};
