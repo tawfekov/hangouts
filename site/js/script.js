@@ -7,7 +7,7 @@ window.app = {
                  || window.RTCPeerConnection,
 
     selectedVideo:"#selectedVideo",
-    audio:false,
+    audio:true,
     onStage:"",
     displayLog:false,
     createVideo: function (socketId) {
