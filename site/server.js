@@ -1,6 +1,18 @@
+var ssl = false ; 
 var express = require('express');
 var app = express();
-var server = require('http').createServer(app);
+var fs = require('fs');
+if(ssl == false){
+    var server = require('http').createServer(app);
+}else{
+    var privateKey = fs.readFileSync('./ssl/localhost.key').toString();
+    var certificate = fs.readFileSync('./ssl/localhost.pem').toString();
+    var options = {
+      key : privateKey,
+      cert : certificate
+    }
+    var server = require('https').createServer(options,app);  
+}
 var webRTC = require('webrtc.io').listen(server);
 
 var port = process.env.PORT || 8080;

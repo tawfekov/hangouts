@@ -9,7 +9,7 @@ window.app = {
     selectedVideo:"#selectedVideo",
     audio:true,
     onStage:"",
-    displayLog:false,
+    displayLog:true,
     createVideo: function (socketId) {
         var id      = "remote-"+socketId;
         var element = '<video id="'+id+'" autoplay controls src=""></video>';
@@ -27,7 +27,7 @@ window.app = {
             app.videos.splice(app.videos.indexOf(video), 1);
             video.fadeOut("slow").remove();
             /// try to remove the big video if its present .
-            ///$("video[alt=remote-"+socketId+"]").fadeOut("slow").remove();
+            $(selectedVideo).fadeOut("slow").remove();
         }else{
           app.logMessage("socketId" + socketId + "not found in the dom , please refresh the page");
         }
@@ -74,7 +74,11 @@ window.app = {
         var room = window.location.hash.slice(1);
         rooms.push(room);
         // connect to socketIO
-        rtc.connect("ws:" + window.location.href.substring(window.location.protocol.length).split('#')[0], room);
+        if(window.location.protocol == "https:"){
+            rtc.connect("wss:" + window.location.href.substring(window.location.protocol.length).split('#')[0], room);
+        }else{
+            rtc.connect("ws:" + window.location.href.substring(window.location.protocol.length).split('#')[0], room);
+        }
         // join event 
         rtc.on('add remote stream', function (stream, socketId) {
             app.logMessage("Adding Remote Stream:# "+ socketId);
