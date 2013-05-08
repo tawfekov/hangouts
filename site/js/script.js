@@ -74,10 +74,12 @@ window.app = {
         var room = window.location.hash.slice(1);
         rooms.push(room);
         // connect to socketIO
-        if(window.location.protocol == "https:"){
+        if(window.location.protocol === "https:"){
             rtc.connect("wss:" + window.location.href.substring(window.location.protocol.length).split('#')[0], room);
+            app.logMessage("using ssl connection");
         }else{
             rtc.connect("ws:" + window.location.href.substring(window.location.protocol.length).split('#')[0], room);
+            app.logMessage("using plain connection");
         }
         // join event 
         rtc.on('add remote stream', function (stream, socketId) {

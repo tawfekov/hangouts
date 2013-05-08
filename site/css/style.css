@@ -1,23 +1,22 @@
 body{
   background-color: #efefef;
 }
-.container-fluid{
+.container{
   background-color: #ffffff;
-  margin-top: 35px;
+  margin-top: 5px;
 }
 video{
   position: relative;
-  float: right;
+  float: left;
   padding-left:4px;
   padding-right:4px;
-  width: 310px;
-  height: 250px;
+  width: 20%;
+  height: auto;
 }
 video#selectedVideo{
   height: 100% !important;
   width:100% !important;
-  border-radius: 5px;
-  display: none;
+  border-radius: 5px;  
 }
 .flip {
 -webkit-transform: rotateY(180deg);

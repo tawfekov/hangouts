@@ -1,4 +1,4 @@
-var ssl = false ; 
+var ssl = false; 
 var express = require('express');
 var app = express();
 var fs = require('fs');
@@ -10,8 +10,8 @@ if(ssl == false){
     var options = {
       key : privateKey,
       cert : certificate
-    }
-    var server = require('https').createServer(options,app);  
+    };
+    var server = require('https').createServer(options,app); 
 }
 var webRTC = require('webrtc.io').listen(server);
 
