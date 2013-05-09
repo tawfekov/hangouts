@@ -62,7 +62,6 @@ if you need to chat with some friends
 ###License:
 `hangouts` is realesed under `MIT` License.
 
-###Developed by:
-    [Tawfek Daghistani](https://github.com/tawfekov) , tawfekov@gmail.com
+###Developed by: [Tawfek Daghistani](https://github.com/tawfekov) , tawfekov@gmail.com
     
 based on  [https://github.com/webRTC/webRTC.io](https://github.com/webRTC/webRTC.io).
