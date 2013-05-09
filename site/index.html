@@ -3,37 +3,24 @@
   <head>
     <title>Video Chat</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link type="text/css" href="/css/bootstrap.min.css" rel="stylesheet"></link>
     <link type="text/css" href="/css/style.css" rel="stylesheet"></link>
   </head>
   <body>
     <div class="container">
-      <div class="row">
-          <div class="span12">
-              <h3>Hangouts :Realtime video chat Web Application for Home and Small Buesiness, Based on NodeJs</h3> 
-          </div>
-          <div class="span12">
-              <ul id="log">
-                  
-              </ul>
-          </div>
-      </div>
-      <div class="row">
-        <div class="span12">
-            <div id="selectedVideo">
+            <div id="selectedVideoContainer">
               <video id="selectedVideo" autoplay controls></video>
             </div>
-        </div>
-        <div class="span12">
             <div id="videos">
                 <video id="you"  class="flip" autoplay controls></video>
             </div>
-        </div>
-      </div>
+    </div>
+    <div class="container">
+      <h3>Hangouts :Realtime video chat Web Application for Home and Small Buesiness, Based on NodeJs</h3> 
+      <p>© Copyrights  by <a href="mailto:tawfekov@gmail.com">Tawfek Daghistani</a> ,  released under MIT </p>
+      <ul id="log"></ul>
     </div>
     <script src="/js/jquery.min.js"></script>
     <script src="/js/webrtc.io.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
     <script src="/js/script.js"></script>
     <script type="text/javascript">
       $(function(){

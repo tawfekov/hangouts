@@ -2,11 +2,11 @@ var ssl = false;
 var express = require('express');
 var app = express();
 var fs = require('fs');
-if(ssl == false){
+if(ssl === false){
     var server = require('http').createServer(app);
 }else{
-    var privateKey = fs.readFileSync('./ssl/localhost.key').toString();
-    var certificate = fs.readFileSync('./ssl/localhost.pem').toString();
+    var privateKey = fs.readFileSync(__dirname  + '/ssl/localhost.key').toString();
+    var certificate = fs.readFileSync(__dirname + '/ssl/localhost.pem').toString();
     var options = {
       key : privateKey,
       cert : certificate
@@ -14,7 +14,6 @@ if(ssl == false){
     var server = require('https').createServer(options,app); 
 }
 var webRTC = require('webrtc.io').listen(server);
-
 var port = process.env.PORT || 8080;
 server.listen(port);
 
@@ -32,17 +31,8 @@ app.get('/', auth, function (req, res) {
 app.get('/css/style.css', auth, function (req, res) {
     res.sendfile(__dirname + '/css/style.css');
 });
-app.get('/css/bootstrap.min.css', auth, function (req, res) {
-    res.sendfile(__dirname + '/css/bootstrap.min.css');
-});
-app.get('/css/bootstrap-responsive.min.css', auth, function (req, res) {
-    res.sendfile(__dirname + '/css/bootstrap-responsive.min.css');
-});
 app.get('/js/jquery.min.js', auth, function (req, res) {
     res.sendfile(__dirname + '/js/jquery.min.js');
-});
-app.get('/js/bootstrap.min.js', auth, function (req, res) {
-    res.sendfile(__dirname + '/js/bootstrap.min.js');
 });
 app.get('/js/script.js', auth, function (req, res) {
     res.sendfile(__dirname + '/js/script.js');

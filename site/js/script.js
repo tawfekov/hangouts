@@ -27,7 +27,7 @@ window.app = {
             app.videos.splice(app.videos.indexOf(video), 1);
             video.fadeOut("slow").remove();
             /// try to remove the big video if its present .
-            $(selectedVideo).fadeOut("slow").remove();
+            $(selectedVideo).fadeOut("slow").html('<video id="selectedVideo" autoplay controls></video>').fadeIn("fast");
         }else{
           app.logMessage("socketId" + socketId + "not found in the dom , please refresh the page");
         }

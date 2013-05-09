@@ -5,6 +5,8 @@ I will Provide a demo soon
 
 ##Instructions on how to setup the demo:
 
+
+### how to setup hangouts ?
 Run in your terminal
 
 ```bash 
@@ -27,6 +29,11 @@ cd site
 node server.js
 ```
 
+if you need to run server in debug mode 
+```bash 
+node server.js -debug 
+```
+
 In a version of Chrome that have webRTC support.
 
 go to [localhost:8080](http://localhost:8080)
@@ -44,7 +51,18 @@ go to [localhost:8080](http://localhost:8080)
 
 click allow to see your camera and the connection will be made between your to open windows.
 
-Developed by:
+
+if you need to chat with some friends 
+### out side your network : 
+    - you need to setup portforwarding in your router to point to your machine .
+    - send them your realip with port `8080` , example : `http://REALIP:8080/`.
+### inside you network :
+    - send them your lan ip  with port `8080` , example : `http://192.168.1.120:8080/` .
+
+###License:
+`hangouts` is realesed under `MIT` License.
+
+###Developed by:
     [@tawfekov](https://github.com/tawfekov)
     
 based on  [https://github.com/webRTC/webRTC.io](https://github.com/webRTC/webRTC.io).
