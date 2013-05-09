@@ -63,6 +63,6 @@ if you need to chat with some friends
 `hangouts` is realesed under `MIT` License.
 
 ###Developed by:
-    [@tawfekov](https://github.com/tawfekov)
+    [Tawfek Daghistani](https://github.com/tawfekov) , tawfekov@gmail.com
     
 based on  [https://github.com/webRTC/webRTC.io](https://github.com/webRTC/webRTC.io).
